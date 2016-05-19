@@ -234,7 +234,7 @@ public class KabeUI extends Application {
 			}
 		}
 		
-		System.out.println((int)(esiR.distance(tesiR)));
+		//System.out.println((int)(esiR.distance(tesiR)));
 		System.out.println("1.x,y = "+esiR.toString()+"   2.x,y = "+tesiR.toString());	
 		return ringid;
 	}
@@ -252,7 +252,7 @@ public class KabeUI extends Application {
 				count++;
 			}
 		}
-		System.out.println((int)(esiR.distance(tesiR)));
+		//System.out.println((int)(esiR.distance(tesiR)));
 		System.out.println("1.x,y = "+esiR.toString()+"   2.x,y = "+tesiR.toString());
 		return ringid;
 	}
@@ -277,6 +277,7 @@ public class KabeUI extends Application {
 	public void m2nguJuht(Pane game, Circle[] p1_1, Circle[] p2_1, Text kumbo){		
 		game.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>(){
 			
+			Logic l = new Logic();
 			int clicked = 0;
 			Point2D[] punktid = new Point2D[2];
 			Point2D esiP;
@@ -288,6 +289,8 @@ public class KabeUI extends Application {
 			Rectangle kast1;
 			Rectangle kast2;
 			boolean vaba = false;
+			boolean vahe;
+			boolean taha;
 			int kes = 0;
 			
 			/*kumb.setFill(Color.BLACK);
@@ -296,116 +299,114 @@ public class KabeUI extends Application {
 			public void handle(MouseEvent e){
 				//System.out.println(((Rectangle)e.getTarget()).getBoundsInLocal());
 				//System.out.println((p1[0].getX()-36)+" "+(p1[0].getY()-34));
-							//double kasti_x = (((Rectangle)e.getTarget()).getX());
-							//double kasti_y = (((Rectangle)e.getTarget()).getY());
+							//System.out.println(((Rectangle)e.getTarget()).getX()+" "+((Rectangle)e.getTarget()).getY());
+							//System.out.println("\n");
 									//System.out.println(p.subtract((double)36,(double) 34).toString());
 										//System.out.println("seal on nupp");
 										//System.out.println("seal ei ole nuppu");
-									//System.out.println(p.subtract((double)36,(double) 34).toString());
-										//System.out.println("seal on nupp");
-										//System.out.println("seal ei ole nuppu");
-							//System.out.println(e.getTarget());
+									//System.out.println(punktid[1].distance(punktid[0])+" "+ tesiP_2.distance(esiP));
 							//System.out.println("x:"+((Rectangle)e.getTarget()).getX()+" y:"+((Rectangle)e.getTarget()).getY());
-										//System.out.println("seal on nupp");
-										//System.out.println("seal ei ole nuppu");
-										//System.out.println("seal on nupp");
-										//System.out.println("seal ei ole nuppu");
-				if(clicked==0){					
-					if(((Rectangle)e.getTarget()).getFill()!= Color.GOLD){							
-						try{
-							kast1=((Rectangle)e.getTarget());
-							kast1.setStroke(Color.DARKSLATEBLUE);
-							kast1.setStrokeWidth(3);
-							punktid[0] = new Point2D((((Rectangle)e.getTarget()).getX()),(((Rectangle)e.getTarget()).getY()));
-							if(kes==0){
-								for(Circle p:p1){
-									esiP = new Point2D(p.getCenterX(),p.getCenterY());
-									if(esiP.subtract(36,34).equals(punktid[0])){
-										vaba = false;
-										break;
-									}else{
-										vaba = true;
+
+				try{
+					if(clicked==0){					
+						if(((Rectangle)e.getTarget()).getFill()!= Color.GOLD){							
+							try{
+								kast1=((Rectangle)e.getTarget());
+								kast1.setStroke(Color.DARKSLATEBLUE);
+								kast1.setStrokeWidth(3);
+								punktid[0] = new Point2D((((Rectangle)e.getTarget()).getX()),(((Rectangle)e.getTarget()).getY()));
+								if(kes==0){
+									for(Circle p:p1){
+										esiP = new Point2D(p.getCenterX(),p.getCenterY());
+										if(esiP.subtract(36,34).equals(punktid[0])){
+											vaba = false;
+											break;
+										}else{
+											vaba = true;
+										}
 									}
-								}
-							}else if(kes==1){
-								for(Circle p:p2){
-									esiP = new Point2D(p.getCenterX(),p.getCenterY());
-									if(esiP.subtract(36,34).equals(punktid[0])){
-										vaba = false;
-										break;
-									}else{
-										vaba = true;
-									}
-								}
-							}
-							if(vaba == true){								
-								clicked=2;
-							}
-						}catch(Exception ge){System.out.println(ge);}
-					}
-				}else if(clicked==1){
-					if(((Rectangle)e.getTarget()).getFill()!= Color.GOLD){
-						try{
-							kast2=((Rectangle)e.getTarget());
-							punktid[1] = new Point2D((((Rectangle)e.getTarget()).getX()), (((Rectangle)e.getTarget()).getY()));
-							if(kes==0){
-								//for(Circle p:p1){
-								for(int i=0; i<12;i++){
-									tesiP_1 = new Point2D(p1[i].getCenterX(),p1[i].getCenterY());
-									tesiP_2 = new Point2D(p2[i].getCenterX(),p2[i].getCenterY());
-									if(tesiP_1.subtract(36,34).equals(punktid[1]) || tesiP_2.subtract(36,34).equals(punktid[1])){
-										vaba = false;
-										break;
-									}else{
-										vaba = true;
-									}
-								}
-								System.out.println(punktid[1].distance(punktid[0]));
-								if(vaba==true){
-									if((int)(punktid[1].distance(punktid[0]))==100 || (int)(punktid[1].distance(punktid[0]))==200){
-										if(punktid[1].subtract(punktid[0]).getY()>0){
-											System.out.println(punktid[1].subtract(punktid[0]));
-											p1 = liigutaNuppP1(game, punktid, p1);
-											kelleK2ik(game, kumb, 1);
-											kes=1;
+								}else if(kes==1){
+									for(Circle p:p2){
+										esiP = new Point2D(p.getCenterX(),p.getCenterY());
+										if(esiP.subtract(36,34).equals(punktid[0])){
+											vaba = false;
+											break;
+										}else{
+											vaba = true;
 										}
 									}
 								}
-							}else if(kes==1){
-								//for(Circle p:p2){
-								for(int i=0; i<12;i++){
-									tesiP_1 = new Point2D(p1[i].getCenterX(),p1[i].getCenterY());
-									tesiP_2 = new Point2D(p2[i].getCenterX(),p2[i].getCenterY());
-									if(tesiP_2.subtract(36,34).equals(punktid[1]) || tesiP_1.subtract(36,34).equals(punktid[1])){									
-										vaba = false;
-										break;
-									}else{
-										vaba = true;
-									}
+								if(vaba == true){								
+									clicked=2;
 								}
-								//System.out.println(punktid[1].distance(punktid[0])+" "+ tesiP_2.distance(esiP));
-								if(vaba==true){
-									if((int)(punktid[1].distance(punktid[0]))==100 || (int)(punktid[1].distance(punktid[0]))==200){
-										if(punktid[1].subtract(punktid[0]).getY()<0){
-											System.out.println(punktid[1].subtract(punktid[0]));
-											p2 = liigutaNuppP2(game, punktid, p2);
-											kelleK2ik(game, kumb, 0);
-											kes=0;
+							}catch(Exception ge){System.out.println(ge);}
+						}
+					}else if(clicked==1){
+						if(((Rectangle)e.getTarget()).getFill()!= Color.GOLD){
+							try{
+								kast2=((Rectangle)e.getTarget());
+								punktid[1] = new Point2D((((Rectangle)e.getTarget()).getX()), (((Rectangle)e.getTarget()).getY()));
+								if(kes==0){
+									//for(Circle p:p1){
+									for(int i=0; i<12;i++){
+										tesiP_1 = new Point2D(p1[i].getCenterX(),p1[i].getCenterY());
+										tesiP_2 = new Point2D(p2[i].getCenterX(),p2[i].getCenterY());
+										if(tesiP_1.subtract(36,34).equals(punktid[1]) || tesiP_2.subtract(36,34).equals(punktid[1])){
+											vaba = false;
+											break;
+										}else{
+											vaba = true;
+										}
+									}
+									//System.out.println(punktid[1].distance(punktid[0]));
+									if(vaba==true){
+										vahe = l.vahed(punktid, p1, p2);
+										if(vahe==true){
+											taha = l.tahad(punktid, 0);
+											if(taha==true){
+												p1 = liigutaNuppP1(game, punktid, p1);
+												kelleK2ik(game, kumb, 1);
+												kes=1;
+											}
+										}
+									}
+								}else if(kes==1){
+									//for(Circle p:p2){
+									for(int i=0; i<12;i++){
+										tesiP_1 = new Point2D(p1[i].getCenterX(),p1[i].getCenterY());
+										tesiP_2 = new Point2D(p2[i].getCenterX(),p2[i].getCenterY());
+										if(tesiP_2.subtract(36,34).equals(punktid[1]) || tesiP_1.subtract(36,34).equals(punktid[1])){									
+											vaba = false;
+											break;
+										}else{
+											vaba = true;
+										}
+									}
+									if(vaba==true){									
+										vahe = l.vahed(punktid, p1, p2);
+										if(vahe==true){
+											taha = l.tahad(punktid, 1);
+											if(taha==true){
+												//System.out.println(punktid[1].subtract(punktid[0]));
+												p2 = liigutaNuppP2(game, punktid, p2);
+												kelleK2ik(game, kumb, 0);
+												kes=0;
+											}
 										}
 									}
 								}
-							}
-						}catch(Exception ge){System.out.println(ge);}
+							}catch(Exception ge){System.out.println(ge);}
+						}
 					}
-				}
-				clicked++;
-				if(clicked>1){
-					clicked=0;
-					try{
-						kast1.setStroke(Color.TRANSPARENT);
-						kast2.setStroke(Color.TRANSPARENT);
-					}catch(Exception ge){}
-				}
+					clicked++;
+					if(clicked>1){
+						clicked=0;
+						try{
+							kast1.setStroke(Color.TRANSPARENT);
+							kast2.setStroke(Color.TRANSPARENT);
+						}catch(Exception ge){}
+					}
+				}catch(Exception ge){System.out.println(ge);}
 			}
 		});		
 	}
