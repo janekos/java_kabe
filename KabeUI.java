@@ -178,7 +178,13 @@ public class KabeUI extends Application {
 				}
 			}
 			return new_rings;
-		}
+		}/*else{
+			game.getChildren().remove(ringid[koht]);
+			Circle nupp = new Circle(-100, -100, 35, Color.TRANSPARENT);
+			ringid[koht]=nupp;
+			m2nguJuht(game, ringid, ringid1, tekst);
+			return ringid;
+		}*/
 	}
 	
 	public Circle[] joonistaNupudp2(Pane game, Point2D uusnupp, int koht, Circle[] ringid){
@@ -217,14 +223,21 @@ public class KabeUI extends Application {
 				}
 			}
 			return new_rings;
-		}
+		}/*else{
+			game.getChildren().remove(ringid[koht]);
+			Circle nupp = new Circle(-100, -100, 35, Color.TRANSPARENT);
+			ringid[koht]=nupp;
+			m2nguJuht(game, ringid1, ringid, tekst);
+			return ringid;
+		}*/
 	}
 	
 	public Circle[] liigutaNuppP1(Pane game, Point2D[] punktid, Circle[] p1){	
 		int count=0;
 		Point2D esiR = punktid[0];
 		Point2D tesiR = punktid[1];
-		Circle[] ringid = new Circle[12];		
+		Circle[] ringid = new Circle[12];
+		Text tekst=new Text();		
 		for(Circle p:p1){
 			Point2D q = new Point2D(p.getCenterX(),p.getCenterY());
 			if(q.subtract(36,34).equals(esiR)){
@@ -244,6 +257,7 @@ public class KabeUI extends Application {
 		Point2D esiR = punktid[0];
 		Point2D tesiR = punktid[1];
 		Circle[] ringid = new Circle[12];
+		Text tekst=new Text();
 		for(Circle p:p2){
 			Point2D q = new Point2D(p.getCenterX(),p.getCenterY());
 			if(q.subtract(36,34).equals(esiR)){
@@ -277,7 +291,7 @@ public class KabeUI extends Application {
 	public void m2nguJuht(Pane game, Circle[] p1_1, Circle[] p2_1, Text kumbo){		
 		game.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>(){
 			
-			Logic l = new Logic();
+			
 			int clicked = 0;
 			Point2D[] punktid = new Point2D[2];
 			Point2D esiP;
@@ -289,7 +303,7 @@ public class KabeUI extends Application {
 			Rectangle kast1;
 			Rectangle kast2;
 			boolean vaba = false;
-			boolean vahe;
+			Circle[][] vahe;
 			boolean taha;
 			int kes = 0;
 			
@@ -297,6 +311,7 @@ public class KabeUI extends Application {
 			kumb.setText("Mustad käivad");*/
 			
 			public void handle(MouseEvent e){
+				Logic l = new Logic();
 				//System.out.println(((Rectangle)e.getTarget()).getBoundsInLocal());
 				//System.out.println((p1[0].getX()-36)+" "+(p1[0].getY()-34));
 							//System.out.println(((Rectangle)e.getTarget()).getX()+" "+((Rectangle)e.getTarget()).getY());
@@ -360,13 +375,16 @@ public class KabeUI extends Application {
 									}
 									//System.out.println(punktid[1].distance(punktid[0]));
 									if(vaba==true){
-										vahe = l.vahed(punktid, p1, p2);
-										if(vahe==true){
-											taha = l.tahad(punktid, 0);
-											if(taha==true){
+										taha = l.tahad(punktid, 0);
+										if(taha==true){
+											//vahe = l.vahed(game, punktid, p1, p2);
+											System.out.println((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX()));
+											if((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX())!=-1){
 												p1 = liigutaNuppP1(game, punktid, p1);
 												kelleK2ik(game, kumb, 1);
 												kes=1;
+											}else{
+												System.out.println("aylmao1");
 											}
 										}
 									}
@@ -375,7 +393,7 @@ public class KabeUI extends Application {
 									for(int i=0; i<12;i++){
 										tesiP_1 = new Point2D(p1[i].getCenterX(),p1[i].getCenterY());
 										tesiP_2 = new Point2D(p2[i].getCenterX(),p2[i].getCenterY());
-										if(tesiP_2.subtract(36,34).equals(punktid[1]) || tesiP_1.subtract(36,34).equals(punktid[1])){									
+										if(tesiP_2.subtract(36,34).equals(punktid[1]) || tesiP_1.subtract(36,34).equals(punktid[1])){								
 											vaba = false;
 											break;
 										}else{
@@ -383,14 +401,17 @@ public class KabeUI extends Application {
 										}
 									}
 									if(vaba==true){									
-										vahe = l.vahed(punktid, p1, p2);
-										if(vahe==true){
-											taha = l.tahad(punktid, 1);
-											if(taha==true){
+										taha = l.tahad(punktid, 1);
+										if(taha==true){
+											//vahe = l.vahed(game, punktid, p1, p2);
+											System.out.println((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX()));
+											if((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX())!=-1){
 												//System.out.println(punktid[1].subtract(punktid[0]));
 												p2 = liigutaNuppP2(game, punktid, p2);
 												kelleK2ik(game, kumb, 0);
 												kes=0;
+											}else{
+												System.out.println("aylmao1");
 											}
 										}
 									}

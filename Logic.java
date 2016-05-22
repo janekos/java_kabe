@@ -1,16 +1,21 @@
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
+import javafx.scene.text.*;
 import javafx.geometry.Point2D;
 
 public class Logic{
-	public boolean vahed(Point2D[] punktid, Circle[] p1, Circle[] p2){
+	public Circle[][] vahed(Pane game, Point2D[] punktid, Circle[] p1, Circle[] p2){
 		
+		KabeUI kui = new KabeUI();
+		Circle[][] k6ik_nupud = new Circle[2][12];
 		Point2D point1;
 		Point2D point2;
 		Point2D check;
 		
 		if((int)(punktid[1].distance(punktid[0]))==100){
-			return true;			
+			k6ik_nupud[0]=p1;
+			k6ik_nupud[1]=p2;
+			return k6ik_nupud;			
 		}else if((int)(punktid[1].distance(punktid[0]))==200){
 			//liikus vasakule
 			if(punktid[0].getX()>punktid[1].getX()){
@@ -22,10 +27,14 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()-73,punktid[0].getY()-69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus üles vasakule");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;	
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus üles vasakule");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;
 						}						
 					}
 				//liikus alla vasakule				
@@ -36,10 +45,14 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()-73,punktid[0].getY()+69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus alla vasakule");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus alla vasakule");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;
 						}	
 					}
 				}
@@ -53,10 +66,14 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()+73,punktid[0].getY()-69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus üles paremale");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus üles paremale");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;
 						}	
 					}
 				//liikus alla paremale			
@@ -67,16 +84,24 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()+73,punktid[0].getY()+69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus alla paremale");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus alla paremale");
-							return true;
+							k6ik_nupud[0]=p1;
+							k6ik_nupud[1]=p2;
+							return k6ik_nupud;
 						}	
 					}
 				}
 			}
 		}
-		return false;
+		k6ik_nupud[0]=p1;
+		k6ik_nupud[0][0]=new Circle(-1,-1, 1);
+		k6ik_nupud[1]=p2;
+		k6ik_nupud[1][0]=new Circle(-1,-1, 1);
+		return k6ik_nupud;
 	}
 	
 	public boolean tahad(Point2D[] punktid, int kumb){
