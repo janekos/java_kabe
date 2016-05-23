@@ -23,13 +23,11 @@ public class KabeUI extends Application {
     @Override
     public void start(Stage Stage) {
 		//panes
-		Pane root = new Pane();
-		Pane option = new Pane();
+		Pane root = new Pane();		
         Pane game = new Pane();
 		
 		//scenes
-		Scene scene = new Scene(root, 600, 600);
-		Scene option_scene = new Scene(option, 600, 600);
+		Scene scene = new Scene(root, 600, 600);		
 		Scene game_scene = new Scene(game, 600, 600);
 		
 		//buttons
@@ -106,7 +104,7 @@ public class KabeUI extends Application {
 		Circle[] v6lts_r = new Circle[12];
 		Circle[] p1 =joonistaNupudp1(game, v6lts ,-1, v6lts_r);
 		Circle[] p2 =joonistaNupudp2(game, v6lts ,-1, v6lts_r);
-		m2nguJuht(game, p1, p2, kumb);
+		m2nguJuht(game, p1, p2, kumb, Stage);
 		
 		//Stage
         Stage.setTitle("Kabe");
@@ -157,6 +155,16 @@ public class KabeUI extends Application {
 				p1_rings[i]=nupp1;
 			}
 			return p1_rings;
+		}else if(koht == 13){
+			for(int i=0; i<12;i++){
+				if(ringid[i].getCenterX()==-1){
+					game.getChildren().remove(ringid[i]);
+					Circle nupp = new Circle(-100, -100, 35, Color.TRANSPARENT);
+					ringid[i]=nupp;
+					return ringid;
+				}
+			}
+			return ringid;
 		}else{
 			for(int i=0; i<12;i++){
 				if(i == koht){
@@ -178,13 +186,7 @@ public class KabeUI extends Application {
 				}
 			}
 			return new_rings;
-		}/*else{
-			game.getChildren().remove(ringid[koht]);
-			Circle nupp = new Circle(-100, -100, 35, Color.TRANSPARENT);
-			ringid[koht]=nupp;
-			m2nguJuht(game, ringid, ringid1, tekst);
-			return ringid;
-		}*/
+		}
 	}
 	
 	public Circle[] joonistaNupudp2(Pane game, Point2D uusnupp, int koht, Circle[] ringid){
@@ -202,6 +204,16 @@ public class KabeUI extends Application {
 				p2_rings[i]=nupp2;
 			}
 			return p2_rings;
+		}else if(koht == 13){
+			for(int i=0; i<12;i++){
+				if(ringid[i].getCenterX()==-1){
+					game.getChildren().remove(ringid[i]);
+					Circle nupp = new Circle(-100, -100, 35, Color.TRANSPARENT);
+					ringid[i]=nupp;
+					return ringid;
+				}
+			}
+			return ringid;
 		}else{
 			for(int i=0; i<12;i++){
 				if(i == koht){
@@ -223,13 +235,7 @@ public class KabeUI extends Application {
 				}
 			}
 			return new_rings;
-		}/*else{
-			game.getChildren().remove(ringid[koht]);
-			Circle nupp = new Circle(-100, -100, 35, Color.TRANSPARENT);
-			ringid[koht]=nupp;
-			m2nguJuht(game, ringid1, ringid, tekst);
-			return ringid;
-		}*/
+		}
 	}
 	
 	public Circle[] liigutaNuppP1(Pane game, Point2D[] punktid, Circle[] p1){	
@@ -247,9 +253,12 @@ public class KabeUI extends Application {
 			}
 		}
 		
-		//System.out.println((int)(esiR.distance(tesiR)));
 		System.out.println("1.x,y = "+esiR.toString()+"   2.x,y = "+tesiR.toString());	
-		return ringid;
+		if(count>11){
+			return ringid = joonistaNupudp1(game, tesiR, 13, p1);
+		}else{
+			return ringid;
+		}
 	}
 	
 	public Circle[] liigutaNuppP2(Pane game, Point2D[] punktid, Circle[] p2){
@@ -266,9 +275,13 @@ public class KabeUI extends Application {
 				count++;
 			}
 		}
-		//System.out.println((int)(esiR.distance(tesiR)));
 		System.out.println("1.x,y = "+esiR.toString()+"   2.x,y = "+tesiR.toString());
-		return ringid;
+		if(count>11){
+			return ringid = joonistaNupudp2(game, tesiR, 13, p2);
+		}else{
+			return ringid;
+		}
+			
 	}
 	
 	public void kelleK2ik(Pane game, Text kumb, int kes){
@@ -288,7 +301,43 @@ public class KabeUI extends Application {
 		game.getChildren().add(kumb);
 	}
 	
-	public void m2nguJuht(Pane game, Circle[] p1_1, Circle[] p2_1, Text kumbo){		
+	public void m2nguLopp(Stage staage, int kumb){
+		Pane end = new Pane();
+		Scene end_scene = new Scene(end, 600, 600);
+		Text kiri = new Text();
+		Button endgame = new Button();
+		BackgroundImage pilt= new BackgroundImage(new Image("images/kabe.jpg",600,600,false,true),
+        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		end.setBackground(new Background(pilt));
+		kiri.setFont(new Font(70));
+		kiri.setLayoutX(110);
+		kiri.setLayoutY(270);
+		if(kumb==0){
+			kiri.setText("Mustade võit");
+			kiri.setFill(Color.WHITE);			
+		}else if(kumb==1){			
+			kiri.setText("Valgete võit");
+			kiri.setFill(Color.WHITE);
+		}
+		endgame.setText("TÄNUD MÄNGIMAST");
+		endgame.setMinSize(140, 50);
+		endgame.setFont(new Font(30));
+		endgame.setLayoutX(150);
+		endgame.setLayoutY(350);
+		endgame.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+				staage.hide();
+            }
+        });
+		end.getChildren().add(endgame);
+		end.getChildren().add(kiri);
+		staage.setScene(end_scene);
+		
+	}
+	
+	public void m2nguJuht(Pane game, Circle[] p1_1, Circle[] p2_1, Text kumbo, Stage staage){		
 		game.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>(){
 			
 			
@@ -305,10 +354,8 @@ public class KabeUI extends Application {
 			boolean vaba = false;
 			Circle[][] vahe;
 			boolean taha;
+			boolean l2bi;
 			int kes = 0;
-			
-			/*kumb.setFill(Color.BLACK);
-			kumb.setText("Mustad käivad");*/
 			
 			public void handle(MouseEvent e){
 				Logic l = new Logic();
@@ -331,6 +378,17 @@ public class KabeUI extends Application {
 								kast1.setStrokeWidth(3);
 								punktid[0] = new Point2D((((Rectangle)e.getTarget()).getX()),(((Rectangle)e.getTarget()).getY()));
 								if(kes==0){
+									for(int i=0;i<12;i++){
+										if(p1[i].getCenterX()!=-100){
+											l2bi = false;
+											break;
+										}else{
+											l2bi = true;
+										}
+									}
+									if(l2bi==true){
+										m2nguLopp(staage, 0);
+									}
 									for(Circle p:p1){
 										esiP = new Point2D(p.getCenterX(),p.getCenterY());
 										if(esiP.subtract(36,34).equals(punktid[0])){
@@ -341,6 +399,17 @@ public class KabeUI extends Application {
 										}
 									}
 								}else if(kes==1){
+									for(int i=0;i<12;i++){
+										if(p2[i].getCenterX()!=-100){
+											l2bi = false;
+											break;
+										}else{
+											l2bi = true;
+										}
+									}
+									if(l2bi==true){
+										m2nguLopp(staage, 1);
+									}
 									for(Circle p:p2){
 										esiP = new Point2D(p.getCenterX(),p.getCenterY());
 										if(esiP.subtract(36,34).equals(punktid[0])){
@@ -354,14 +423,19 @@ public class KabeUI extends Application {
 								if(vaba == true){								
 									clicked=2;
 								}
-							}catch(Exception ge){System.out.println(ge);}
+							}catch(Exception ge){
+								System.out.println(ge);
+								System.out.println(ge.getStackTrace()[0].getLineNumber());
+							}
 						}
 					}else if(clicked==1){
 						if(((Rectangle)e.getTarget()).getFill()!= Color.GOLD){
 							try{
 								kast2=((Rectangle)e.getTarget());
 								punktid[1] = new Point2D((((Rectangle)e.getTarget()).getX()), (((Rectangle)e.getTarget()).getY()));
+//VALGED KÄIVAD
 								if(kes==0){
+									
 									//for(Circle p:p1){
 									for(int i=0; i<12;i++){
 										tesiP_1 = new Point2D(p1[i].getCenterX(),p1[i].getCenterY());
@@ -378,17 +452,30 @@ public class KabeUI extends Application {
 										taha = l.tahad(punktid, 0);
 										if(taha==true){
 											//vahe = l.vahed(game, punktid, p1, p2);
-											System.out.println((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX()));
-											if((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX())!=-1){
+											System.out.println((int)(l.vahed(game, punktid, (Circle[])p1.clone(), (Circle[])p2.clone())[0][0].getCenterX()));
+											if((int)(l.vahed(game, punktid, (Circle[])p1.clone(), (Circle[])p2.clone())[0][0].getCenterX())!=-1){
+												vahe = l.vahed(game, punktid, p1, p2);
+												p1 = vahe[0];
+												p2 = vahe[1];
 												p1 = liigutaNuppP1(game, punktid, p1);
+												p2 = liigutaNuppP2(game, punktid, p2);
 												kelleK2ik(game, kumb, 1);
 												kes=1;
 											}else{
-												System.out.println("aylmao1");
+												System.out.println("ei saa");
+												for(int i=0;i<12;i++){
+													System.out.println(p1[i]);
+												}
+												System.out.println("\n");
+												for(int i=0;i<12;i++){
+													System.out.println(p2[i]);
+												}
 											}
 										}
 									}
+//MUSTAD KÄIVAD
 								}else if(kes==1){
+									
 									//for(Circle p:p2){
 									for(int i=0; i<12;i++){
 										tesiP_1 = new Point2D(p1[i].getCenterX(),p1[i].getCenterY());
@@ -404,19 +491,32 @@ public class KabeUI extends Application {
 										taha = l.tahad(punktid, 1);
 										if(taha==true){
 											//vahe = l.vahed(game, punktid, p1, p2);
-											System.out.println((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX()));
-											if((int)(l.vahed(game, punktid, p1, p2)[0][0].getCenterX())!=-1){
-												//System.out.println(punktid[1].subtract(punktid[0]));
-												p2 = liigutaNuppP2(game, punktid, p2);
+											System.out.println((int)(l.vahed(game, punktid, (Circle[])p1.clone(), (Circle[])p2.clone())[0][0].getCenterX()));
+											if((int)(l.vahed(game, punktid, (Circle[])p1.clone(), (Circle[])p2.clone())[0][0].getCenterX())!=-1){
+												vahe = l.vahed(game, punktid, p1, p2);												
+												p1 = vahe[0];
+												p2 = vahe[1];
+												p1 = liigutaNuppP1(game, punktid, p1);
+												p2 = liigutaNuppP2(game, punktid, p2);												
 												kelleK2ik(game, kumb, 0);
 												kes=0;
 											}else{
-												System.out.println("aylmao1");
+												System.out.println("ei saa");
+												for(int i=0;i<12;i++){
+													System.out.println(p1[i]);
+												}
+												System.out.println("\n");
+												for(int i=0;i<12;i++){
+													System.out.println(p2[i]);
+												}
 											}
 										}
 									}
 								}
-							}catch(Exception ge){System.out.println(ge);}
+							}catch(Exception ge){System.out.println(ge);
+							  //ge.printStackTrace();
+							  System.out.println(ge.getStackTrace()[0].getLineNumber());
+							}
 						}
 					}
 					clicked++;
@@ -427,7 +527,10 @@ public class KabeUI extends Application {
 							kast2.setStroke(Color.TRANSPARENT);
 						}catch(Exception ge){}
 					}
-				}catch(Exception ge){System.out.println(ge);}
+				}catch(Exception ge){
+					System.out.println(ge);
+					System.out.println(ge.getStackTrace()[0].getLineNumber());
+				}
 			}
 		});		
 	}

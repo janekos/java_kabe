@@ -27,11 +27,15 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()-73,punktid[0].getY()-69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus üles vasakule");
+							game.getChildren().remove(p1[i]);
+							p1[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;	
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus üles vasakule");
+							game.getChildren().remove(p2[i]);
+							p2[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;
@@ -45,11 +49,15 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()-73,punktid[0].getY()+69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus alla vasakule");
+							game.getChildren().remove(p1[i]);
+							p1[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus alla vasakule");
+							game.getChildren().remove(p2[i]);
+							p2[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;
@@ -66,11 +74,15 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()+73,punktid[0].getY()-69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus üles paremale");
+							game.getChildren().remove(p1[i]);
+							p1[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus üles paremale");
+							game.getChildren().remove(p2[i]);
+							p2[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;
@@ -84,11 +96,15 @@ public class Logic{
 						check = new Point2D(punktid[0].getX()+73,punktid[0].getY()+69);
 						if(point1.subtract(36,34).equals(check)){
 							System.out.println("liikus alla paremale");
+							game.getChildren().remove(p1[i]);
+							p1[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;
 						}else if(point2.subtract(36,34).equals(check)){
 							System.out.println("liikus alla paremale");
+							game.getChildren().remove(p2[i]);
+							p2[i]= new Circle(-1,-1,-1);
 							k6ik_nupud[0]=p1;
 							k6ik_nupud[1]=p2;
 							return k6ik_nupud;
